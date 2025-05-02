@@ -1,0 +1,29 @@
+.TeamMenu {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    border: solid 1px transparent;
+    border-radius: 50%;
+    transition: all .5s ease-out;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transform: scale(1.1);
+    /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
+}
+
+.menu-item img {
+    width: 100px;
+}
