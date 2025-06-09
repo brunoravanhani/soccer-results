@@ -1,5 +1,11 @@
-- name: Terraform Init
-  run: terraform -chdir=infra init
+name: Deploy AWS Infrastructure
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+      - name: Terraform Init
+        run: terraform -chdir=infra init
 
-- name: Terraform Apply
-  run: terraform -chdir=infra apply -var "zone_id=${{ secrets.TF_VAR_ZONE_ID }}" -auto-approve
+      - name: Terraform Apply
+        run: terraform -chdir=infra apply -var "zone_id=${{ secrets.TF_VAR_ZONE_ID }}" -auto-approve
