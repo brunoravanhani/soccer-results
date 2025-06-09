@@ -4,26 +4,14 @@
     gap: 10px;
 }
 
-.menu-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 150px;
-    height: 150px;
-    border-radius: 5px;
-    border: solid 1px transparent;
-    border-radius: 50%;
-    transition: all .5s ease-out;
-    cursor: pointer;
-}
+.team-menu-wrapper {
+  text-align: center;
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #282c34;
 
-.menu-item:hover {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    transform: scale(1.1);
-    /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
-}
-
-.menu-item img {
-    width: 100px;
 }
