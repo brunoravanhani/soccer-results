@@ -13,11 +13,11 @@ variable "zone_id" {
 variable "bucket_name" {
   description = "Bucket Name"
   type        = string
-  default = "soccer-results"
+  default     = "soccer-results"
 }
 
 variable "aws_region" {
   description = "AWS Region"
   type        = string
-  default = "us-east-1"
+  default     = "us-east-1"
 }

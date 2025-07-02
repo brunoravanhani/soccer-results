@@ -5,21 +5,21 @@ provider "aws" {
 locals {
   domain_name = "soccer.ravanhani.com"
   tags = {
-    Terraform   = "true"
-    Context     = "ravanhani-site"
-    App     = "soccer-results"
+    Terraform = "true"
+    Context   = "ravanhani-site"
+    App       = "soccer-results"
   }
   s3_domain = "${var.bucket_name}.s3.${var.aws_region}.amazonaws.com"
   content_type_map = {
-    "js" = "application/javascript"
-    "html" = "text/html"
-    "css"  = "text/css"
-    "png"  = "image/png"
-    "webp"  = "image/webp"
-    "ico"  = "image/ico"
-    "xml"  = "text/xml"
-    "svg"  = "image/svg+xml"
-    "webmanifest"  = "application/manifest+json"
+    "js"          = "application/javascript"
+    "html"        = "text/html"
+    "css"         = "text/css"
+    "png"         = "image/png"
+    "webp"        = "image/webp"
+    "ico"         = "image/ico"
+    "xml"         = "text/xml"
+    "svg"         = "image/svg+xml"
+    "webmanifest" = "application/manifest+json"
   }
 }
 
@@ -84,7 +84,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     origin_id                = local.s3_domain
   }
 
-  aliases = [ local.domain_name ]
+  aliases             = [local.domain_name]
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "Distribution Soccer Results"
@@ -112,9 +112,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   viewer_certificate {
     cloudfront_default_certificate = false
-    acm_certificate_arn = aws_acm_certificate.cert.arn
-    ssl_support_method = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2021"
+    acm_certificate_arn            = aws_acm_certificate.cert.arn
+    ssl_support_method             = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2021"
   }
 }
 
