@@ -50,7 +50,7 @@ resource "aws_route53_record" "certificate" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = "${var.zone_id}"
+  zone_id         = var.zone_id
 }
 
 # Creating S3 bucket & Cloudfront Distribution
