@@ -3,21 +3,29 @@ name: Deploy AWS Infrastructure
 on:
   workflow_dispatch:
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     environment: PROD
-#     steps:
-#       - name: Terraform Init
-#         run: terraform -chdir=infra init
-
-#       - name: Terraform Apply
-#         run: terraform -chdir=infra apply -var "zone_id=${{ secrets.TF_VAR_ZONE_ID }}" -auto-approve
+env:
+  
+  AWS_REGION : us-east-1
 
 permissions:
-  contents: read
+      id-token: write  
+      contents: read
 
 jobs:
+  AssumeRoleAndCallIdentity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: arn:aws:iam::087730237728:role/GitHubAction-AssumeRoleWithAction
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
@@ -32,13 +40,6 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v4
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v4.1.0
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
