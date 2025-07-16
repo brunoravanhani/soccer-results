@@ -6,6 +6,8 @@ import { Users, UserCircle2 } from 'lucide-react';
 const TeamLineup = ({ lineup = {} }) => {
   const [activeTab, setActiveTab] = useState('starters');
 
+  const start = !!lineup.start ? lineup.start : [];
+
   const renderPlayers = (players) => {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -49,7 +51,7 @@ const TeamLineup = ({ lineup = {} }) => {
       </div>
       
       <div className="animate-fade-in">
-          {renderPlayers(lineup.start.slice(0, 11))}
+          {renderPlayers(start.slice(0, 11))}
       </div>
     </div>
   );
