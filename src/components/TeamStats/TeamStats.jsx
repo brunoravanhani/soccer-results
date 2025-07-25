@@ -4,6 +4,7 @@ import TeamHeader from "../TeamHeader/TeamHeader";
 import TeamStadium from "../TeamStadium/TeamStadium";
 import MatchResults from "../MatchResults/MatchResults";
 import TeamLineup from "../TeamLineup/TeamLineup";
+import { config } from '../../config';
 
 export default function TeamStats() {
 
@@ -17,11 +18,11 @@ export default function TeamStats() {
     }, []);
 
     const fetchTeamStats = async () => {
-        const url = `https://soccer-football-info.p.rapidapi.com/teams/view/?i=${params.id}`
+        const url = `https://${config.apiUrl}/teams/view/?i=${params.id}`
         const response = await fetch(url, {
             headers: {
-                'x-rapidapi-host': 'soccer-football-info.p.rapidapi.com',
-                'x-rapidapi-key': ''
+                'x-rapidapi-host': config.apiUrl,
+                'x-rapidapi-key': config.apiKey
             }
         });
         if (!response.ok) {
@@ -29,7 +30,6 @@ export default function TeamStats() {
           }
       
           const json = await response.json();
-          console.log(json.result[0]);
           setTeamStats(json.result[0]);
     }
 
