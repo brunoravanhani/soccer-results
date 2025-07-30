@@ -152,20 +152,6 @@ data "aws_iam_policy_document" "allow_access_from_cloudfront" {
   }
 }
 
-# Upload files to S3
-
-# resource "aws_s3_object" "upload" {
-#   for_each   = fileset(var.content_path, "**")
-
-#   bucket = var.bucket_name
-#   key    = each.value
-#   source = "${var.content_path}/${each.value}"
-#   etag   = filemd5("${var.content_path}/${each.value}")
-#   content_type = lookup(local.content_type_map, split(".", "${var.content_path}/${each.value}")[1], "text/html")
-# }
-
-# Add Route35 Records
-
 resource "aws_route53_record" "A_dist_record" {
   zone_id = var.zone_id
   name    = local.domain_name
@@ -187,5 +173,17 @@ resource "aws_route53_record" "AAAA_dist_record" {
     name                   = aws_cloudfront_distribution.s3_distribution.domain_name
     zone_id                = aws_cloudfront_distribution.s3_distribution.hosted_zone_id
     evaluate_target_health = true
+  }
+}
+
+resource "terraform_data" "clear_cloudfront_cache" {
+  lifecycle {
+    replace_triggered_by = [
+      aws_cloudfront_distribution.cdn
+    ]
+  }
+
+  provisioner "local-exec" {
+    command = "aws cloudfront create-invalidation --distribution-id ${aws_cloudfront_distribution.cdn.id} --paths '/*'"
   }
 }
