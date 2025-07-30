@@ -29,11 +29,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Create .env file
-        run: |
-          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
-          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
-
       - name: Build React App
         run: npm run build
 
@@ -44,6 +39,12 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::087730237728:role/GitHubAction-AssumeRoleWithAction
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Create .env file
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> build/.env
+          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> build/.env
+
 
       - name: Deploy to S3
         run: aws s3 sync build/ s3://ravanhani-soccer-results --delete
