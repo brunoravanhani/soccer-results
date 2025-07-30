@@ -41,6 +41,14 @@ export default function TeamStats() {
         return teamStats.last_matches[0].championship.name;
     }
 
+    const isHomeMatch = () => {
+      if (!teamStats || !teamStats.last_matches) {
+        return true;
+      }
+
+      return teamStats.last_matches[0].teamA.name == teamStats.name;
+    }
+
     return (
         <div className="min-h-screen bg-gray-100">
             <TeamHeader 
@@ -65,7 +73,7 @@ export default function TeamStats() {
         
         {/* Team Lineup */}
         <div className="mt-8">
-          <TeamLineup lineup={teamStats.last_lineup}/>
+          <TeamLineup lineup={teamStats.last_lineup} isHomeMatch={isHomeMatch()}/>
         </div>
       </div>
       

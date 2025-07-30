@@ -3,7 +3,7 @@ import { Users, UserCircle2 } from 'lucide-react';
 
 
 
-const TeamLineup = ({ lineup = {} }) => {
+const TeamLineup = ({ lineup = {}, isHomeMatch = true }) => {
   const [activeTab, setActiveTab] = useState('starters');
 
   const start = !!lineup.start ? lineup.start : [];
@@ -51,7 +51,7 @@ const TeamLineup = ({ lineup = {} }) => {
       </div>
       
       <div className="animate-fade-in">
-          {renderPlayers(start.slice(0, 11))}
+          {renderPlayers(isHomeMatch ? start.slice(0, 11) : start.slice(11, 22))}
       </div>
     </div>
   );
