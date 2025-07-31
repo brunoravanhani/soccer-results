@@ -179,11 +179,11 @@ resource "aws_route53_record" "AAAA_dist_record" {
 resource "terraform_data" "clear_cloudfront_cache" {
   lifecycle {
     replace_triggered_by = [
-      aws_cloudfront_distribution.cdn
+      aws_cloudfront_distribution.s3_distribution
     ]
   }
 
   provisioner "local-exec" {
-    command = "aws cloudfront create-invalidation --distribution-id ${aws_cloudfront_distribution.cdn.id} --paths '/*'"
+    command = "aws cloudfront create-invalidation --distribution-id ${aws_cloudfront_distribution.s3_distribution.id} --paths '/*'"
   }
 }
