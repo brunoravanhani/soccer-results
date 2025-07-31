@@ -26,17 +26,6 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build React App
-        run: npm run build
-
-      - name: Create .env file
-        run: |
-          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> dist/.env
-          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> dist/.env
-
       - name: Git clone the repository
         uses: actions/checkout@v3
       - name: configure aws credentials
@@ -44,8 +33,18 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::087730237728:role/GitHubAction-AssumeRoleWithAction
           aws-region: ${{ env.AWS_REGION }}
-      - name: List files
-        run: ls -laR
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React App
+        run: npm run build
+
+      # - name: Create .env file
+      #   run: |
+      #     echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> dist/.env
+      #     echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> dist/.env
+
       - name: Deploy to S3
-        run: aws s3 sync dist s3://ravanhani-soccer-results --delete
+        run: aws s3 sync dist/ s3://ravanhani-soccer-results --delete
       
