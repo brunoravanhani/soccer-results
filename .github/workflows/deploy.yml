@@ -44,6 +44,8 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::087730237728:role/GitHubAction-AssumeRoleWithAction
           aws-region: ${{ env.AWS_REGION }}
+      - name: List files
+        run: ls -laR
       - name: Deploy to S3
         run: aws s3 sync dist s3://ravanhani-soccer-results --delete
       
