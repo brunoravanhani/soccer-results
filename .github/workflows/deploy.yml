@@ -37,13 +37,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build React App
-        run: npm run build
-
       - name: Create .env file
         run: |
-          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> dist/.env
-          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> dist/.env
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
+
+      - name: Build React App
+        run: npm run build
 
       - name: Deploy to S3
         run: aws s3 sync dist/ s3://ravanhani-soccer-results --delete
